@@ -1,9 +1,9 @@
-AL = 'AL'
-FE = 'FE'
-CU = 'CU'
-AG = 'AG'
-AU = 'AU'
-DIMOND = 'DIMOND'
+AL = 'Al'
+FE = 'Fe'
+CU = 'Cu'
+AG = 'Ag'
+AU = 'Au'
+DIMOND = 'Dimond'
 
 
 METAL_LIST = [AL, FE, CU, AG, AU, DIMOND]
