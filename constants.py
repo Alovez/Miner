@@ -18,12 +18,12 @@ METAL_SCALE = {
 }
 
 METAL_DEEP = {
-    AL: 1000,
-    FE: 1500,
-    CU: 1800,
-    AG: 2100,
-    AU: 2200,
-    DIMOND: 2500
+    AL: -1000,
+    FE: -1500,
+    CU: -1800,
+    AG: -2100,
+    AU: -2200,
+    DIMOND: -2500
 }
 
 METAL_DEEP_WIDTH = {

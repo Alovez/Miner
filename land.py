@@ -9,9 +9,15 @@ class BaseLand(object):
         # metal num
         self.metal_num = {}
         self.metal_info = {}
+        self.loss = {}
 
-    def dig(self, deep):
+    def explore(self, deep):
+        info = None
+        for i in range(deep + 1):
+            if self.metal_info.get(self.deep - i, None) is not None:
+                info = self.metal_info.get(self.deep - i, None)
         self.deep -= deep
+        return info
 
     def get_ore_num(self, metal):
         num = 0
@@ -42,6 +48,9 @@ class SandLand1(BaseLand):
         self.metal_delta[constants.AG] = 0.003
         self.metal_delta[constants.AU] = 0.003
         self.metal_delta[constants.DIMOND] = 0.003
+        self.loss[1] = 1.5
+        self.loss[2] = 2.5
+        self.loss[3] = 3.5
 
 
 class SandLand2(BaseLand):
@@ -53,6 +62,9 @@ class SandLand2(BaseLand):
         self.metal_delta[constants.AG] = 0.003
         self.metal_delta[constants.AU] = 0.003
         self.metal_delta[constants.DIMOND] = 0.003
+        self.loss[1] = 1.5
+        self.loss[2] = 2.5
+        self.loss[3] = 3.5
 
 
 class GrassLand1(BaseLand):
@@ -64,6 +76,9 @@ class GrassLand1(BaseLand):
         self.metal_delta[constants.AG] = 0.001
         self.metal_delta[constants.AU] = 0.001	
         self.metal_delta[constants.DIMOND] = 0.001
+        self.loss[1] = 1
+        self.loss[2] = 2
+        self.loss[3] = 3
 
 
 class GrassLand2(BaseLand):
@@ -75,6 +90,9 @@ class GrassLand2(BaseLand):
         self.metal_delta[constants.AG] = 0.001
         self.metal_delta[constants.AU] = 0.001	
         self.metal_delta[constants.DIMOND] = 0.001
+        self.loss[1] = 1
+        self.loss[2] = 2
+        self.loss[3] = 3
 
 
 class WetLand(BaseLand):
@@ -86,6 +104,9 @@ class WetLand(BaseLand):
         self.metal_delta[constants.AG] = -0.01
         self.metal_delta[constants.AU] = -0.01
         self.metal_delta[constants.DIMOND] = 0.005
+        self.loss[1] = 2
+        self.loss[2] = 2.5
+        self.loss[3] = 3.5
 
 
 class GobiLand(BaseLand):
@@ -97,6 +118,9 @@ class GobiLand(BaseLand):
         self.metal_delta[constants.AG] = 0.01
         self.metal_delta[constants.AU] = 0.008
         self.metal_delta[constants.DIMOND] = 0.005
+        self.loss[1] = 3
+        self.loss[2] = 6
+        self.loss[3] = 12
 
 
 class Mountain(BaseLand):
@@ -108,6 +132,10 @@ class Mountain(BaseLand):
         self.metal_delta[constants.AG] = 0.002
         self.metal_delta[constants.AU] = 0.005
         self.metal_delta[constants.DIMOND] = 0.002
+        self.loss[1] = 1.5
+        self.loss[2] = 3
+        self.loss[3] = 3.5
+        self.deep = 500
 
 
 land_list = [SandLand1, SandLand2, GrassLand1, GrassLand2, WetLand, GobiLand, Mountain]
