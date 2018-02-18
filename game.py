@@ -19,7 +19,7 @@ class GameInfo(object):
         self.account = 0
         self.cash = 0
         self.probing_equipment = 'n/a'
-        self.dig_equipmen = 'n/a'
+        self.dig_equipment = 'n/a'
         self.land = None
         # status flag
         self.exploring_flag = False
@@ -41,6 +41,14 @@ class GameInfo(object):
             return 'Reload Last Game.'
         else:
             return 'Not In The Interactive'
+    
+    def process_num(self, num):
+        print num
+        if self.command_state == command_state.WAITING_CHOOSE_LAND:
+            self.land = land_list[land - 1]()
+            self.land.get_metal_element()
+            self.write_into_file()
+            return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (self.land.name, self.land.metal_info)
 
     def set_state(self, state):
         self.last_state = self.command_state
@@ -75,7 +83,6 @@ class GameInfo(object):
             return 'Game Over'
 
     def get_state(self):
-        print "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
         return "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
 
     def set_loan(self, loan):

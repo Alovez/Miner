@@ -6,6 +6,7 @@ class BaseLand(object):
         self.deep = 0
         self.metal_delta = {}
         self.dimond_scale = 0
+        self.name = ''
         # metal num
         self.metal_num = {}
         self.metal_info = {}
@@ -42,6 +43,7 @@ class BaseLand(object):
 class SandLand1(BaseLand):
     def __init__(self):
         super(SandLand1, self).__init__()
+        self.name = 'SandLand1'
         self.metal_delta[constants.AL] = 0.005
         self.metal_delta[constants.FE] = 0.001
         self.metal_delta[constants.CU] = 0.001
@@ -56,6 +58,7 @@ class SandLand1(BaseLand):
 class SandLand2(BaseLand):
     def __init__(self):
         super(SandLand2, self).__init__()
+        self.name = 'SandLand2'
         self.metal_delta[constants.AL] = 0.008
         self.metal_delta[constants.FE] = 0.001
         self.metal_delta[constants.CU] = 0.001
@@ -70,6 +73,7 @@ class SandLand2(BaseLand):
 class GrassLand1(BaseLand):
     def __init__(self):
         super(GrassLand1, self).__init__()
+        self.name = 'GrassLand1'
         self.metal_delta[constants.AL] = - 0.005	
         self.metal_delta[constants.FE] = 0.002
         self.metal_delta[constants.CU] = 0.002
@@ -84,6 +88,7 @@ class GrassLand1(BaseLand):
 class GrassLand2(BaseLand):
     def __init__(self):
         super(GrassLand2, self).__init__()
+        self.name = 'GrassLand2'
         self.metal_delta[constants.AL] = - 0.008
         self.metal_delta[constants.FE] = 0.005
         self.metal_delta[constants.CU] = 0.001
@@ -98,6 +103,7 @@ class GrassLand2(BaseLand):
 class WetLand(BaseLand):
     def __init__(self):
         super(WetLand, self).__init__()
+        self.name = 'WetLand'
         self.metal_delta[constants.AL] = -0.01
         self.metal_delta[constants.FE] = -0.01
         self.metal_delta[constants.CU] = -0.01
@@ -112,6 +118,7 @@ class WetLand(BaseLand):
 class GobiLand(BaseLand):
     def __init__(self):
         super(GobiLand, self).__init__()
+        self.name = 'GobiLand'
         self.metal_delta[constants.AL] = 0.008
         self.metal_delta[constants.FE] = 0.008
         self.metal_delta[constants.CU] = 0.01
@@ -126,6 +133,7 @@ class GobiLand(BaseLand):
 class Mountain(BaseLand):
      def __init__(self):
         super(Mountain, self).__init__()
+        self.name = 'Mountain'
         self.metal_delta[constants.AL] = 0.005
         self.metal_delta[constants.FE] = 0.008
         self.metal_delta[constants.CU] = 0.001
