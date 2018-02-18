@@ -1,6 +1,7 @@
 from time import sleep
 from land import land_list
 from equipment import probing_equipment_list
+import csv
 
 class GameInfo(object):
     def __init__(self):
@@ -18,6 +19,30 @@ class GameInfo(object):
         self.land = None
         # status flag
         self.exploring_flag = False
+        # uer_id
+        self.user_id = 0
+
+    def set_uer_id(self, user_id):
+        self.user_id = user_id
+
+    def write_into_file(self):
+        with open('game_info_%s' % self.user_id, 'w') as f:
+            fieldnames = self.__dict__.keys()
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerow(self.__dict__)
+
+    def read_from_file(self):
+        try:
+            with open('game_info_%s' % self.user_id, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    self.__dict__ = row
+            return True
+        except:
+            self.write_into_file()
+            return False
+
 
     def set_loan(self, loan):
         self.account -= loan
@@ -26,6 +51,8 @@ class GameInfo(object):
 
 
 game = GameInfo()
+
+import pdb;pdb.set_trace()
 
 while True:
     if not game.loan_flag:
