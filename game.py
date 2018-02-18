@@ -1,11 +1,14 @@
 from time import sleep
 from land import land_list
 from equipment import probing_equipment_list
+import command_state
 import csv
 
 class GameInfo(object):
     def __init__(self):
         # flow flag
+        self.command_state = command_state.WAITING_SET_LOAN
+        self.last_state = command_state.WAITING_SET_LOAN
         self.loan_flag = False
         self.land_flag = False
         self.probing_equipment_flag = False
@@ -15,14 +18,25 @@ class GameInfo(object):
         self.sell_flag = False
         self.account = 0
         self.cash = 0
-        self.probing_equipment = 0
+        self.probing_equipment = 'n/a'
+        self.dig_equipmen = 'n/a'
         self.land = None
         # status flag
         self.exploring_flag = False
         # uer_id
         self.user_id = 0
 
-    def set_uer_id(self, user_id):
+    def process_yes(self):
+        if self.command_state == command_state.WAITING_START_NEW_GAME:
+            self.command_state = command_state.WAITING_SET_LOAN
+        self.write_into_file()
+
+    def process_no(self)：
+        if self.command_state == command_state.WAITING_START_NEW_GAME:
+            self.command_state = self.last_state
+        self.write_into_file()
+
+    def set_user_id(self, user_id):
         self.user_id = user_id
 
     def write_into_file(self):
@@ -43,17 +57,14 @@ class GameInfo(object):
             self.write_into_file()
             return False
 
-    def get_state(self):
-        if not self.loan_flag:
-            return 'Waiting to loan...'
-        elif not self.land_flag:
-            return 'Waiting to choose land...'
-        elif not self.probing_equipment_flag:
-            return 'Waiting to choose Probing Equipment...'
-        elif not self.dig_equipment_flag:
-            return 'Waiting to choose Dig Equipment...'
+    def get_stage(self):
+        if self.command_state == command_state.WAITING_SET_LOAN:
+            return 'Waiting to set loan...'
         else:
             return 'Game Over'
+
+    def get_state(self):
+        return "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
 
     def set_loan(self, loan):
         self.account -= loan

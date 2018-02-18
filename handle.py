@@ -5,6 +5,7 @@ import reply
 import receive
 import web
 from game import GameInfo
+import command_state
 
 class Handle(object):
     def GET(self):
@@ -56,16 +57,25 @@ class Handle(object):
         print 'user_id = %s' % user_id
         print 'content = %s' % content
         print '*' * 80
-        if content.lower() == "miner":
-            game = GameInfo()
-            game.set_uer_id(user_id)
+
+        game = GameInfo()
+        game.set_user_id(user_id)
+
+        if content.lower() == 'help':
+            return "***********\n1.start: Start New Game\n2.state: Get the state\n***********"
+        elif content.lower() == 'yes':
+            game.process_yes()
+        elif content.lower() == 'no':
+            game.process_no()
+        elif content.lower() == 'start':
             if not game.read_from_file():
-                return 'Send "help" to get command help'
+                game.command_state = command_state.WAITING_START_NEW_GAME
+                game.write_into_file()
+                return "Last game is still running. \nDo you want to *terminal* the last game and start new game('yes' to start new game, 'no' to return last game)?"
             else:
                 return 'Game start'
-        elif content.lower() == 'help':
-            return "***********\n1.state: Get state\n"
-        elif content.lower() == 'state':
+
+        elif content.lower() == 'loan':
             game = GameInfo()
             game.set_uer_id(user_id)
             game.read_from_file()
