@@ -31,7 +31,7 @@ class GameInfo(object):
             self.command_state = command_state.WAITING_SET_LOAN
         self.write_into_file()
 
-    def process_no(self)：
+    def process_no(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.command_state = self.last_state
         self.write_into_file()

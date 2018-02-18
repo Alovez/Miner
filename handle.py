@@ -68,7 +68,7 @@ class Handle(object):
         elif content.lower() == 'no':
             game.process_no()
         elif content.lower() == 'start':
-            if not game.read_from_file():
+            if game.read_from_file():
                 game.command_state = command_state.WAITING_START_NEW_GAME
                 game.write_into_file()
                 return "Last game is still running. \nDo you want to *terminal* the last game and start new game('yes' to start new game, 'no' to return last game)?"
