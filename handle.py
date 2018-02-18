@@ -70,7 +70,7 @@ class Handle(object):
         elif content.lower() == 'start':
             if game.read_from_file():
                 game.set_state(command_state.WAITING_START_NEW_GAME)
-                return "Last game is still running. \nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
+                return "Last game is still running. \n\nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
             else:
                 return 'Game start'
 

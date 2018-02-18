@@ -27,6 +27,7 @@ class GameInfo(object):
         self.user_id = 0
 
     def process_yes(self):
+        print self.command_state
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.set_state(command_state.WAITING_SET_LOAN)
             return 'New Game Started.'
@@ -34,6 +35,7 @@ class GameInfo(object):
             return 'Not In The Interactive'
 
     def process_no(self):
+        print self.command_state
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.set_state(self.last_state)
             return 'Reload Last Game.'
