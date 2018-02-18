@@ -75,7 +75,7 @@ class Handle(object):
             else:
                 return 'Game start'
         elif content.lower() == 'state':
-            game.get_state()
+            return game.get_state()
         elif content.lower() == 'loan':
             game = GameInfo()
             game.set_uer_id(user_id)
