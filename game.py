@@ -52,42 +52,42 @@ class GameInfo(object):
 
 game = GameInfo()
 
-while True:
-    if not game.loan_flag:
-        game.loan = int(raw_input("Plaese input the loan: "))
-        game.set_loan(game.loan)
-    if not game.land_flag:
-        game.land_flag = True
-        land = int(raw_input("Plaese choose land in: \n 1 - SandLand1 \n 2 - SandLand2 \n 3 - GrassLand1 \n 4 - GrassLand2 \n 5 - WetLand \n 6 - GobiLand \n 7 - Mountain\n"))
-        game.land = land_list[land - 1]()
-        game.land.get_metal_element()
-        print game.land.metal_info
-    if not game.probing_equipment_flag:
-        game.probing_equipment_flag = True
-        probing_equipment = int(raw_input("Please choose probing land in: \n 1 - Level 1 \n 2 - Level 2 \n 3 - Level 3\n"))
-        game.probing_equipment = probing_equipment_list[game.probing_equipment - 1]()
-        game.exploring_flag = True
-    if game.exploring_flag:
-        # Explore
-        ore = game.land.explore(game.probing_equipment.deep)
-        # Loss
-        game.probing_equipment.lost(game.land.loss)
-        # Got Ore
-        if ore is not None:
-            game.exploring_flag = False
-            command = int(raw_input("%s is Founded. Should we start to dig(1 - Yes, 2 - No):" % ore))
-            if command == 1:
-                game.dig_equipment_flag = False
-        else:
-            print "Explored %sm." % game.land.deep
-        # Probing Broken
-        if game.probing_equipment.health < 0:
-            print "Probing is Broken!"
-            game.exploring_flag = False
-            break
-        else:
-            print "Probing Status: \n - Health: %s\n" % game.probing_equipment.health
+# while True:
+#     if not game.loan_flag:
+#         game.loan = int(raw_input("Plaese input the loan: "))
+#         game.set_loan(game.loan)
+#     if not game.land_flag:
+#         game.land_flag = True
+#         land = int(raw_input("Plaese choose land in: \n 1 - SandLand1 \n 2 - SandLand2 \n 3 - GrassLand1 \n 4 - GrassLand2 \n 5 - WetLand \n 6 - GobiLand \n 7 - Mountain\n"))
+#         game.land = land_list[land - 1]()
+#         game.land.get_metal_element()
+#         print game.land.metal_info
+#     if not game.probing_equipment_flag:
+#         game.probing_equipment_flag = True
+#         probing_equipment = int(raw_input("Please choose probing land in: \n 1 - Level 1 \n 2 - Level 2 \n 3 - Level 3\n"))
+#         game.probing_equipment = probing_equipment_list[game.probing_equipment - 1]()
+#         game.exploring_flag = True
+#     if game.exploring_flag:
+#         # Explore
+#         ore = game.land.explore(game.probing_equipment.deep)
+#         # Loss
+#         game.probing_equipment.lost(game.land.loss)
+#         # Got Ore
+#         if ore is not None:
+#             game.exploring_flag = False
+#             command = int(raw_input("%s is Founded. Should we start to dig(1 - Yes, 2 - No):" % ore))
+#             if command == 1:
+#                 game.dig_equipment_flag = False
+#         else:
+#             print "Explored %sm." % game.land.deep
+#         # Probing Broken
+#         if game.probing_equipment.health < 0:
+#             print "Probing is Broken!"
+#             game.exploring_flag = False
+#             break
+#         else:
+#             print "Probing Status: \n - Health: %s\n" % game.probing_equipment.health
     
-    if not game.dig_equipment_flag:
-        print "Game Over"
-        break
+#     if not game.dig_equipment_flag:
+#         print "Game Over"
+#         break
