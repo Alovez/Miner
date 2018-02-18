@@ -28,15 +28,22 @@ class GameInfo(object):
 
     def process_yes(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
-            self.command_state = command_state.WAITING_SET_LOAN
-            self.write_into_file()
+            self.set_state(command_state.WAITING_SET_LOAN)
             return 'New Game Started.'
+        else:
+            return 'Not In The Interactive'
 
     def process_no(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
-            self.command_state = self.last_state
-            self.write_into_file()
+            self.set_state(self.last_state)
             return 'Reload Last Game.'
+        else:
+            return 'Not In The Interactive'
+
+    def set_state(self, state):
+        self.last_state = self.command_state
+        self.command_state = state
+        self.write_into_file()
 
     def set_user_id(self, user_id):
         self.user_id = user_id
