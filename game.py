@@ -52,8 +52,6 @@ class GameInfo(object):
 
 game = GameInfo()
 
-import pdb;pdb.set_trace()
-
 while True:
     if not game.loan_flag:
         game.loan = int(raw_input("Plaese input the loan: "))
