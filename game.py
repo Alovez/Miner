@@ -43,6 +43,17 @@ class GameInfo(object):
             self.write_into_file()
             return False
 
+    def get_state(self):
+        if not self.loan_flag:
+            return 'Waiting to loan...'
+        elif not self.land_flag:
+            return 'Waiting to choose land...'
+        elif not self.probing_equipment_flag:
+            return 'Waiting to choose Probing Equipment...'
+        elif not self.dig_equipment_flag:
+            return 'Waiting to choose Dig Equipment...'
+        else:
+            return 'Game Over'
 
     def set_loan(self, loan):
         self.account -= loan

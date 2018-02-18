@@ -63,6 +63,13 @@ class Handle(object):
                 return 'Send "help" to get command help'
             else:
                 return 'Game start'
+        elif content.lower() == 'help':
+            return "***********\n1.state: Get state\n"
+        elif content.lower() == 'state':
+            game = GameInfo()
+            game.set_uer_id(user_id)
+            game.read_from_file()
+            return game.get_state()
         else:
             print 'enter unkown'
             return 'Unkonw\ncommand'
