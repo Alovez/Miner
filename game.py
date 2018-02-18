@@ -29,12 +29,14 @@ class GameInfo(object):
     def process_yes(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.command_state = command_state.WAITING_SET_LOAN
-        self.write_into_file()
+            self.write_into_file()
+            return 'New Game Started.'
 
     def process_no(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.command_state = self.last_state
-        self.write_into_file()
+            self.write_into_file()
+            return 'Reload Last Game.'
 
     def set_user_id(self, user_id):
         self.user_id = user_id

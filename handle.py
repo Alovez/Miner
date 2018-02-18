@@ -64,9 +64,9 @@ class Handle(object):
         if content.lower() == 'help':
             return "***********\n1.start: Start New Game\n2.state: Get the state\n***********"
         elif content.lower() == 'yes':
-            game.process_yes()
+            return game.process_yes()
         elif content.lower() == 'no':
-            game.process_no()
+            return game.process_no()
         elif content.lower() == 'start':
             if game.read_from_file():
                 game.command_state = command_state.WAITING_START_NEW_GAME
