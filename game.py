@@ -75,6 +75,7 @@ class GameInfo(object):
             return 'Game Over'
 
     def get_state(self):
+        print "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
         return "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
 
     def set_loan(self, loan):
