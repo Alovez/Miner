@@ -60,6 +60,7 @@ class Handle(object):
 
         game = GameInfo()
         game.set_user_id(user_id)
+        game.read_from_file()
 
         if content.lower() == 'help':
             return "***********\n1.start: Start New Game\n2.state: Get the state\n***********"
@@ -73,7 +74,8 @@ class Handle(object):
                 return "Last game is still running. \n\nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
             else:
                 return 'Game start'
-
+        elif content.lower() == 'state':
+            game.get_state()
         elif content.lower() == 'loan':
             game = GameInfo()
             game.set_uer_id(user_id)
