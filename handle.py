@@ -52,7 +52,6 @@ class Handle(object):
         except Exception, Argment:
             return Argment
     
-
     def process_game(self, user_id, content):
         print '*' * 80
         print 'user_id = %s' % user_id
@@ -65,6 +64,8 @@ class Handle(object):
         except:
             if content.lower() == 'start':
                 game = GameInfo(user_id)
+                with open('game_info_%s' % user_id, 'w') as f:
+                    picklestring = pickle.dump(game, f)
             return "There's no game running. New Game Started."
         content_text = self.get_content(game, content)
         with open('game_info_%s' % user_id, 'w') as f:
