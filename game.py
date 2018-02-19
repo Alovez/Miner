@@ -47,7 +47,7 @@ class GameInfo(object):
     def process_num(self, num):
         print num
         if self.command_state == command_state.WAITING_CHOOSE_LAND:
-            self.land = land_list[num - 1](self.user_id)
+            self.land = land_list[int(num) - 1](self.user_id)
             self.land.get_metal_element()
             self.set_state(command_state.WAITING_CHOOSE_PROBING_EQUIPMENT)
             self.write_into_file()
