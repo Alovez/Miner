@@ -60,13 +60,15 @@ class Handle(object):
         print '*' * 80
         game = None
         try:
-            with open('game_info_%s' % self.user_id, 'r') as f:
+            with open('game_info_%s' % user_id, 'r') as f:
                 game = pickle.load(f)
         except:
-            return "There's no game running."
+            if content.lower() == 'start':
+                game = GameInfo(user_id)
+            return "There's no game running. New Game Started."
         content_text = self.get_content(game, content)
-        with open('game_info_%s' % self.user_id, 'w') as f:
-            picklestring = pickle.dump(self, f)
+        with open('game_info_%s' % user_id, 'w') as f:
+            picklestring = pickle.dump(game, f)
         return content_text
 
     def get_content(game, content):
@@ -79,11 +81,8 @@ class Handle(object):
         elif content.lower() in '1234567890':
             return game.process_num(content.lower())
         elif content.lower() == 'start':
-            if game.read_from_ file():
-                game.set_state(command_state.WAITING_START_NEW_GAME)
-                return "Last game is still running. \n\nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
-            else:
-                return 'Game start'
+            game.set_state(command_state.WAITING_START_NEW_GAME)
+            return "Last game is still running. \n\nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
         elif content.lower() == 'state':
             return game.get_state()
         elif content.lower() == 'loan':

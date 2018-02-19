@@ -14,20 +14,11 @@ class GameInfo(object):
         # flow flag
         self.command_state = command_state.WAITING_SET_LOAN
         self.last_state = command_state.WAITING_SET_LOAN
-        self.loan_flag = False
-        self.land_flag = False
-        self.probing_equipment_flag = False
-        self.probing_cost_flag = False
-        self.dig_equipment_flag = True
-        self.dig_cost_flag = False
-        self.sell_flag = False
         self.account = 0
         self.cash = 0
         self.probing_equipment = 'n/a'
         self.dig_equipment = 'n/a'
         self.land = 'n/a'
-        # status flag
-        self.exploring_flag = False
         # uer_id
         self.user_id = user_id
 
