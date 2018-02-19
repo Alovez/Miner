@@ -112,7 +112,7 @@ class Handle(object):
             return 'Unkonw\ncommand'
 
 
-# handle = Handle()
-# while True:
-#     content = raw_input('command: ')
-#     print handle.process_game(1,content)
+handle = Handle()
+while True:
+    content = raw_input('command: ')
+    print handle.process_game(1,content)

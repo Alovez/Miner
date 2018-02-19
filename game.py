@@ -67,6 +67,10 @@ class GameInfo(object):
     def process_next(self):
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             return "Reply 'yes' to start new game, 'no' to reload last game."
+        elif self.command_state == command_state.WAITING_CHOOSE_LAND:
+            return "Reply a number to choose land(Reply 'land' to get help)."
+        elif self.command_state == command_state.WAITING_CHOOSE_PROBING_EQUIPMENT:
+            return "Reply a number to choose probing equipment(Reply 'prob' to get help)."
         elif self.command_state == command_state.FINISH_WAITING_START:
             return "Reply 'loan {number}' to get loan({number} is the number you want to get from account)."
         elif self.command_state == command_state.FINISH_SET_LOAN:
