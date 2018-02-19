@@ -173,8 +173,8 @@ class Mountain(BaseLand):
 land_list = [SandLand1, SandLand2, GrassLand1, GrassLand2, WetLand, GobiLand, Mountain]
 
 
-land = SandLand1(1)
-land.get_metal_element()
-land.write_into_file()
-new_land = land.read_from_file()
-import pdb;pdb.set_trace()
+# land = SandLand1(1)
+# land.get_metal_element()
+# land.write_into_file()
+# new_land = land.read_from_file()
+# import pdb;pdb.set_trace()
