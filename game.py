@@ -80,8 +80,9 @@ class GameInfo(object):
                             self.__dict__[key] = json.loads(row[key])
                         else:
                             self.__dict__[key] = row[key]
-                self.land = BaseLand()
-                self.land.read_from_file()
+                land = BaseLand()
+                if land.read_from_file():
+                    self.land = land
             return True
         except:
             self.write_into_file()

@@ -90,5 +90,5 @@ class Handle(object):
             else:
                 return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (game.land.name, game.land.metal_info)
         else:
-            print 'enter unkown'
+            print 'Enter unkown'
             return 'Unkonw\ncommand'

@@ -41,7 +41,6 @@ class BaseLand(object):
                             self.__dict__[key] = row[key]
             return True
         except:
-            self.write_into_file()
             return False
 
     def get_ore_num(self, metal):
