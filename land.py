@@ -1,6 +1,7 @@
 import constants
 import numpy
 import csv
+import pickle
 
 class BaseLand(object):
     def __init__(self, user_id):

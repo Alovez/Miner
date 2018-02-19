@@ -6,6 +6,7 @@ import receive
 import web
 from game import GameInfo
 import command_state
+import pickle
 
 class Handle(object):
     def GET(self):
@@ -57,11 +58,18 @@ class Handle(object):
         print 'user_id = %s' % user_id
         print 'content = %s' % content
         print '*' * 80
+        game = None
+        try:
+            with open('game_info_%s' % self.user_id, 'r') as f:
+                game = pickle.load(f)
+        except:
+            return "There's no game running."
+        content_text = self.get_content(game, content)
+        with open('game_info_%s' % self.user_id, 'w') as f:
+            picklestring = pickle.dump(self, f)
+        return content_text
 
-        game = GameInfo()
-        game.set_user_id(user_id)
-        game.read_from_file()
-
+    def get_content(game, content):
         if content.lower() == 'help':
             return "***********\n1.start: Start New Game\n2.state: Get the state\n3.loan: Loan From Bank\n4.land: Choose land\n***********"
         elif content.lower() == 'yes':
@@ -71,7 +79,7 @@ class Handle(object):
         elif content.lower() in '1234567890':
             return game.process_num(content.lower())
         elif content.lower() == 'start':
-            if game.read_from_file():
+            if game.read_from_ file():
                 game.set_state(command_state.WAITING_START_NEW_GAME)
                 return "Last game is still running. \n\nDo you want to *terminal* the last game and start new game?\n\n('yes' to start new game, 'no' to return last game)"
             else:

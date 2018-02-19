@@ -6,9 +6,11 @@ import command_state
 import csv
 import json
 import os
+import copy
+import pickle
 
 class GameInfo(object):
-    def __init__(self):
+    def __init__(self, user_id):
         # flow flag
         self.command_state = command_state.WAITING_SET_LOAN
         self.last_state = command_state.WAITING_SET_LOAN
@@ -27,7 +29,7 @@ class GameInfo(object):
         # status flag
         self.exploring_flag = False
         # uer_id
-        self.user_id = 0
+        self.user_id = user_id
 
     def process_yes(self):
         print self.command_state
@@ -53,7 +55,6 @@ class GameInfo(object):
             self.land = land_list[int(num) - 1](self.user_id)
             self.land.get_metal_element()
             self.set_state(command_state.WAITING_CHOOSE_PROBING_EQUIPMENT)
-            self.write_into_file()
             return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (self.land.name, self.land.metal_info)
         else:
             return 'Not In The Interactive'
@@ -61,35 +62,9 @@ class GameInfo(object):
     def set_state(self, state):
         self.last_state = self.command_state
         self.command_state = state
-        self.write_into_file()
 
     def set_user_id(self, user_id):
         self.user_id = user_id
-
-    def write_into_file(self):
-        with open('game_info_%s' % self.user_id, 'w') as f:
-            fieldnames = self.__dict__.keys()
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow(self.__dict__)
-
-    def read_from_file(self):
-        try:
-            with open('game_info_%s' % self.user_id, 'r') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    for key, item in self.__dict__.iteritems:
-                        if isinstance(item, dict):
-                            self.__dict__[key] = json.loads(row[key])
-                        else:
-                            self.__dict__[key] = row[key]
-                land = BaseLand()
-                if land.read_from_file():
-                    self.land = land
-            return True
-        except:
-            self.write_into_file()
-            return False
 
     def get_stage(self):
         if self.command_state == command_state.WAITING_SET_LOAN:
@@ -106,7 +81,26 @@ class GameInfo(object):
         self.loan_flag = True
 
 
-game = GameInfo()
+# game = GameInfo()
+# game.set_user_id(1)
+# game.land = land_list[2](1)
+# game.land.get_metal_element()
+
+# print game.land.metal_info
+# print type(game.land)
+
+# with open('game_info_%s' % 1, 'w') as f:
+#     picklestring = pickle.dump(game, f)
+
+# # import pdb;pdb.set_trace()
+
+# with open('game_info_%s' % 1, 'r') as f:
+#     game = pickle.load(f)
+
+
+# print game.land.metal_info
+
+# print type(game.land)
 
 # while True:
 #     if not game.loan_flag:
