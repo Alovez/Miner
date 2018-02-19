@@ -84,8 +84,11 @@ class Handle(object):
             game.read_from_file()
             return game.get_state()
         elif content.lower() == 'land':
-            game.set_state(command_state.WAITING_CHOOSE_LAND)
-            return 'Plaese choose land in: \n 1 - SandLand1 \n 2 - SandLand2 \n 3 - GrassLand1 \n 4 - GrassLand2 \n 5 - WetLand \n 6 - GobiLand \n 7 - Mountain\n'
+            if game.land == 'n/a':
+                game.set_state(command_state.WAITING_CHOOSE_LAND)
+                return 'Plaese choose land in: \n 1 - SandLand1 \n 2 - SandLand2 \n 3 - GrassLand1 \n 4 - GrassLand2 \n 5 - WetLand \n 6 - GobiLand \n 7 - Mountain\n'
+            else:
+                return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (game.land.name, game.land.metal_info)
         else:
             print 'enter unkown'
             return 'Unkonw\ncommand'

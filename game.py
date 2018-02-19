@@ -1,8 +1,10 @@
 from time import sleep
 from land import land_list
 from equipment import probing_equipment_list
+from land import BaseLand
 import command_state
 import csv
+import json
 
 class GameInfo(object):
     def __init__(self):
@@ -20,7 +22,7 @@ class GameInfo(object):
         self.cash = 0
         self.probing_equipment = 'n/a'
         self.dig_equipment = 'n/a'
-        self.land = None
+        self.land = 'n/a'
         # status flag
         self.exploring_flag = False
         # uer_id
@@ -45,10 +47,13 @@ class GameInfo(object):
     def process_num(self, num):
         print num
         if self.command_state == command_state.WAITING_CHOOSE_LAND:
-            self.land = land_list[land - 1]()
+            self.land = land_list[num - 1](self.user_id)
             self.land.get_metal_element()
+            self.set_state(command_state.WAITING_CHOOSE_PROBING_EQUIPMENT)
             self.write_into_file()
             return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (self.land.name, self.land.metal_info)
+        else:
+            return 'Not In The Interactive'
 
     def set_state(self, state):
         self.last_state = self.command_state
@@ -70,7 +75,13 @@ class GameInfo(object):
             with open('game_info_%s' % self.user_id, 'r') as f:
                 reader = csv.DictReader(f)
                 for row in reader:
-                    self.__dict__ = row
+                    for key, item in self.__dict__.iteritems:
+                        if isinstance(item, dict):
+                            self.__dict__[key] = json.loads(row[key])
+                        else:
+                            self.__dict__[key] = row[key]
+                self.land = BaseLand()
+                self.land.read_from_file()
             return True
         except:
             self.write_into_file()
@@ -83,7 +94,7 @@ class GameInfo(object):
             return 'Game Over'
 
     def get_state(self):
-        return "**********\nAccount: %s\nCash: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.probing_equipment, self.dig_equipment)
+        return "**********\nAccount: %s\nCash: %s\nLand: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.land, self.probing_equipment, self.dig_equipment)
 
     def set_loan(self, loan):
         self.account -= loan

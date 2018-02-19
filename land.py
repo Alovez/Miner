@@ -1,8 +1,10 @@
 import constants
 import numpy
+import csv
 
 class BaseLand(object):
-    def __init__(self):
+    def __init__(self, user_id):
+        self.user_id = user_id
         self.deep = 0
         self.metal_delta = {}
         self.dimond_scale = 0
@@ -19,6 +21,28 @@ class BaseLand(object):
                 info = self.metal_info.get(self.deep - i, None)
         self.deep -= deep
         return info
+
+    def write_into_file(self):
+        with open('land_info_%s' % self.user_id, 'w') as f:
+            fieldnames = self.__dict__.keys()
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerow(self.__dict__)
+
+    def read_from_file(self):
+        try:
+            with open('land_info_%s' % self.user_id, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    for key, item in self.__dict__.iteritems:
+                        if isinstance(item, dict):
+                            self.__dict__[key] = json.loads(row[key])
+                        else:
+                            self.__dict__[key] = row[key]
+            return True
+        except:
+            self.write_into_file()
+            return False
 
     def get_ore_num(self, metal):
         num = 0
@@ -41,8 +65,8 @@ class BaseLand(object):
 
 
 class SandLand1(BaseLand):
-    def __init__(self):
-        super(SandLand1, self).__init__()
+    def __init__(self, user_id):
+        super(SandLand1, self).__init__(user_id)
         self.name = 'SandLand1'
         self.metal_delta[constants.AL] = 0.005
         self.metal_delta[constants.FE] = 0.001
@@ -56,8 +80,8 @@ class SandLand1(BaseLand):
 
 
 class SandLand2(BaseLand):
-    def __init__(self):
-        super(SandLand2, self).__init__()
+    def __init__(self, user_id):
+        super(SandLand2, self).__init__(user_id)
         self.name = 'SandLand2'
         self.metal_delta[constants.AL] = 0.008
         self.metal_delta[constants.FE] = 0.001
@@ -71,8 +95,8 @@ class SandLand2(BaseLand):
 
 
 class GrassLand1(BaseLand):
-    def __init__(self):
-        super(GrassLand1, self).__init__()
+    def __init__(self, user_id):
+        super(GrassLand1, self).__init__(user_id)
         self.name = 'GrassLand1'
         self.metal_delta[constants.AL] = - 0.005	
         self.metal_delta[constants.FE] = 0.002
@@ -86,8 +110,8 @@ class GrassLand1(BaseLand):
 
 
 class GrassLand2(BaseLand):
-    def __init__(self):
-        super(GrassLand2, self).__init__()
+    def __init__(self, user_id):
+        super(GrassLand2, self).__init__(user_id)
         self.name = 'GrassLand2'
         self.metal_delta[constants.AL] = - 0.008
         self.metal_delta[constants.FE] = 0.005
@@ -101,8 +125,8 @@ class GrassLand2(BaseLand):
 
 
 class WetLand(BaseLand):
-    def __init__(self):
-        super(WetLand, self).__init__()
+    def __init__(self, user_id):
+        super(WetLand, self).__init__(user_id)
         self.name = 'WetLand'
         self.metal_delta[constants.AL] = -0.01
         self.metal_delta[constants.FE] = -0.01
@@ -116,8 +140,8 @@ class WetLand(BaseLand):
 
 
 class GobiLand(BaseLand):
-    def __init__(self):
-        super(GobiLand, self).__init__()
+    def __init__(self, user_id):
+        super(GobiLand, self).__init__(user_id)
         self.name = 'GobiLand'
         self.metal_delta[constants.AL] = 0.008
         self.metal_delta[constants.FE] = 0.008
@@ -131,8 +155,8 @@ class GobiLand(BaseLand):
 
 
 class Mountain(BaseLand):
-     def __init__(self):
-        super(Mountain, self).__init__()
+     def __init__(self, user_id):
+        super(Mountain, self).__init__(user_id)
         self.name = 'Mountain'
         self.metal_delta[constants.AL] = 0.005
         self.metal_delta[constants.FE] = 0.008
@@ -147,3 +171,10 @@ class Mountain(BaseLand):
 
 
 land_list = [SandLand1, SandLand2, GrassLand1, GrassLand2, WetLand, GobiLand, Mountain]
+
+
+land = SandLand1(1)
+land.get_metal_element()
+land.write_into_file()
+new_land = land.read_from_file()
+import pdb;pdb.set_trace()
