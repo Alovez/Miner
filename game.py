@@ -8,26 +8,29 @@ import json
 import os
 import copy
 import pickle
+import datetime
 
 class GameInfo(object):
     def __init__(self, user_id):
         # flow flag
-        self.command_state = command_state.WAITING_SET_LOAN
-        self.last_state = command_state.WAITING_SET_LOAN
+        self.command_state = command_state.FINISH_WAITING_START
+        self.last_state = command_state.WAITING_START_NEW_GAME
         self.account = 0
         self.cash = 0
         self.probing_equipment = 'n/a'
         self.dig_equipment = 'n/a'
         self.land = 'n/a'
+        self.start_time = datetime.datetime.now()
         # uer_id
         self.user_id = user_id
 
     def process_yes(self):
         print self.command_state
         if self.command_state == command_state.WAITING_START_NEW_GAME:
-            self.set_state(command_state.WAITING_SET_LOAN)
+            self.set_state(command_state.FINISH_WAITING_START)
             os.system('rm -f game_info_%s' % self.user_id)
             os.system('rm -f land_info_%s' % self.user_id)
+            self.__init__(self.user_id)
             return 'New Game Started.'
         else:
             return 'Not In The Interactive'
@@ -42,29 +45,48 @@ class GameInfo(object):
     
     def process_num(self, num):
         print num
+        num = int(num)
         if self.command_state == command_state.WAITING_CHOOSE_LAND:
-            self.land = land_list[int(num) - 1](self.user_id)
-            self.land.get_metal_element()
-            self.set_state(command_state.WAITING_CHOOSE_PROBING_EQUIPMENT)
-            return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (self.land.name, self.land.metal_info)
+            if num > 0 and num < 8:
+                self.land = land_list[num - 1](self.user_id)
+                self.land.get_metal_element()
+                self.set_state(command_state.FINISH_CHOOSE_LAND)
+                return '%s is chosen.\n\n(DEBUG: Ore info: %s)' % (self.land.name, self.land.metal_info)
+            else:
+                return 'Please choose land in 1-7'
+        elif self.command_state == command_state.WAITING_CHOOSE_PROBING_EQUIPMENT:
+            if num > 0 and num < 4:
+                self.probing_equipment = probing_equipment_list[num - 1]()
+                self.set_state(command_state.FINISH_CHOOSE_PROBING_EQUIPMENT)
+                return "Level %s Probing Equipment is chosen" % self.probing_equipment.level
+            else:
+                return 'Please choose probing equipment in 1-3'
         else:
             return 'Not In The Interactive'
+
+    def process_next(self):
+        if self.command_state == command_state.WAITING_START_NEW_GAME:
+            return "Reply 'yes' to start new game, 'no' to reload last game."
+        elif self.command_state == command_state.FINISH_WAITING_START:
+            return "Reply 'loan {number}' to get loan({number} is the number you want to get from account)."
+        elif self.command_state == command_state.FINISH_SET_LOAN:
+            return "Reply 'land' to choose your land."
+        elif self.command_state == command_state.FINISH_CHOOSE_LAND:
+            return "Reply 'prob' to choose Probing Equipment"
+        else:
+            return "No next step, Reply 'state' to get the State of game"
 
     def set_state(self, state):
         self.last_state = self.command_state
         self.command_state = state
 
-    def set_user_id(self, user_id):
-        self.user_id = user_id
-
-    def get_stage(self):
-        if self.command_state == command_state.WAITING_SET_LOAN:
-            return 'Waiting to set loan...'
-        else:
-            return 'Game Over'
-
     def get_state(self):
-        return "**********\nAccount: %s\nCash: %s\nLand: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, self.land, self.probing_equipment, self.dig_equipment)
+        if self.land != 'n/a':
+            land = self.land.name
+        else:
+            land = self.land
+        state = "**********\nAccount: %s\nCash: %s\nLand: %s\nProbing Equipment:%s\nDig Equipment:%s\n**********" % (self.account, self.cash, land, self.probing_equipment, self.dig_equipment)
+        return state
 
     def set_loan(self, loan):
         self.account -= loan
