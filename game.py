@@ -5,6 +5,7 @@ from land import BaseLand
 import command_state
 import csv
 import json
+import os
 
 class GameInfo(object):
     def __init__(self):
@@ -32,6 +33,8 @@ class GameInfo(object):
         print self.command_state
         if self.command_state == command_state.WAITING_START_NEW_GAME:
             self.set_state(command_state.WAITING_SET_LOAN)
+            os.system('rm -f game_info_%s' % self.user_id)
+            os.system('rm -f land_info_%s' % self.user_id)
             return 'New Game Started.'
         else:
             return 'Not In The Interactive'
