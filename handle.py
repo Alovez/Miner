@@ -43,7 +43,7 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 # content = self.process_game(ToUserName, recMsg.Content)
                 # import pdb;pdb.set_trace()
-                content = self.process_game(fromUser, recMsg.Content)
+                content = self.process_game(toUser, recMsg.Content)
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
